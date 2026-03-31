@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
+<html lang="id"><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/content/location/location.js" id="eppiocemhmnlbhjplcgkofciiegomcon"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/extend-native-history-api.js"></script><script src="chrome-extension://eppiocemhmnlbhjplcgkofciiegomcon/libs/requests.js"></script><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jadwal Piket Shift</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&amp;family=Rajdhani:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
   :root {
     --neon-blue: #00D4FF;
@@ -24,7 +22,6 @@
     font-family: 'Rajdhani', sans-serif;
     color: var(--text-main);
     min-height: 100vh;
-    overflow-x: hidden;
     position: relative;
   }
 
@@ -215,7 +212,6 @@
     -webkit-backdrop-filter: blur(16px);
     border-radius: 10px;
     border: 1px solid var(--border-neon);
-    overflow: hidden;
     position: sticky; top: 1rem;
     box-shadow: 0 0 30px rgba(0,212,255,0.07), inset 0 1px 0 rgba(255,255,255,0.05);
   }
@@ -342,8 +338,36 @@
     .rekap-badge { background: #f0f0f0 !important; color: #333 !important; border-color: #ccc !important; }
   }
 </style>
-</head>
-<body>
+<style id="HighlightThisStyles">.htef00294a-9cdd-4188-9c4d-36c92c65289a {
+background-color: #FFFF66 !important;
+-webkit-print-color-adjust:exact !important;
+font-style: inherit;
+}
+</style><style id="sweezy-cursors--styles">
+      body a,
+      body button,
+      body [type='button'],
+      body input[type='reset'],
+      body input[type='submit'],
+      body [role="button"],
+      ::-webkit-search-cancel-button,
+      ::-webkit-search-decoration,
+      ::-webkit-scrollbar-button, 
+      ::-webkit-file-upload-button,
+      body .sweezy-custom-cursor-hover,
+      body button.sweezy-custom-cursor-hover,
+      body a.sweezy-custom-cursor-hover {
+        cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABU5JREFUWEe9l2tsFFUUx//nzsy23RaKaZnStN3dCQWMaCAQCUFNMBalRqNgiR8sIjF+JNQYIdHEKGh8RB4JGu2GIBoiREQRISomysM14iOIPLQFO9N0+8BdGuhj233MXHN3ZrfLuttKNTvJZHf23rvnd/7n3HPuEPJcHo9nFWPsJSKaCaAdwHO6rn+eb/5kf6dcC71e7wpG7JNqWFjCEzhOMkIgyzTNxq6urqOTNZZrXU4ATdNOVXBr0XEMwc0IAxLhrrgbA6BvDMO4pxAAfQ1IVPmlUUCi5L06WoTvTNZhGIYIyf925VPg8jKWUFtdUYDZAM0RFwKJQgJIptpaEgMk2ACDCgKxQgIoptpaFk+HoPmqjMAoFTAERabaWp4AZJZUoTkkITBSSIBiS22tNMcU6GUIRFBABdxcba2yANlJwiAQGCwkQBlXW2u4rYBMaNaBwAAvnAINU7nq99reJwEuWghc5RxAD+d87/Dw8KZwODz4XwtCZh0oqqmpmd7d3d2jaVpvwzSo/pksHYKt3Rb6LaBtiOOHK5ZgOs85X22aphkMBtsARCcDkwTw+XwtRLQJwBTOeSeA6csqyO2fIzm7QKhg1wMoDAcuW3j61ChkUaTs6xqALbquvwLAuhEQ8nq9jxGjPbe5gYZphH1hoC8GNFQS/HPldAiSyegkpIDYfDaG6ikMikw49GcMv/QmQITdnPMdkUikPRQKDf0bEPL5fD+rLiw8OV+CixEuWYS7T8XROEOCf54yZjRlPAWS+exiWPf1EI78EYNIEiKMWpa10zTNDcFgcGQ8EAEQebiKlWyrlxyJCY0/xVFXSvAvdNkhyDbuJGYqQcV4OAHs/z2KqaUMx9qj+PK8CBFE97wXgJkPIgmwsloq2XKzkBtJY5svmega4fAvLs4dgsxwpGCyFNl+cgjbDl8DgT/Z2dm5Ky+Apmlt88pp9qeLXXbnkwlnI8COthj8d5ZkeC+UcBIxW5VsRSSCWcywYGMQgyP8qK7r942nwG4C1px70A13OskIfQlghtuRP9O7tMeiR2QkZmqOo6LQf60/hGNnIn2GYVTnBfB4PE0gtn/7kmKs8DhJl9PgWFEai73dqK4DcQ4wQskN+/rx8beDcV3XXXkBamtrS2RZ7l6gSjcdaCxLhyEzwXJ6mgsyZdz5bHk/hM+ODUYMwyjNCyAGvF7vGyanZw+vmop5laL4CG9zyJ+W2ZE+8zlt3FHExbDyxSB+bY+267o+ZyKAaiK6dHut4v6oqRxgGcmWGef0d3u3JCFTIcj0XiaMMMLcRy+KuvCBYRhrxgUQg5qmvRw3+fNvPVKOh2YX2QayZc6GyZI8vUsYYd/3g9i4tU9sw6bOzs4DEwKIXFAU5Te3jPqvWlTUlGUVoH8YEwrg+pwRcxghrhCWPtWB3r8SXbqui1N0fEIAMaG2tnaRoign6lW56OB61d6WqTtZI0Ro8sieNA5AIby+9wre2RMWJXmtYRi7xy3F2YM+n+8JAO/N97iwp6UKpS5m//F4Cecc3cWcQz8OYd0LQTAJXxiGcf9EDSnne4HP51sPYJtnukw7n6nGrEqnKybD4CRoZkgEoIvh3YP9eO3tyyCGCwDuMAzj6qQAxCLxcipJ0i5wXta8vByPL5+Geo/LbitJj21VrCKGE6eHsXVXCGcujECS6GQ0Gl3Z09MTnsi4GM+pQGphXV3dTFmWtwN4IBqzUKMquHVWMSqEIkQIheM4fS6C/gETisyucc5fNQzjzfG6XzbUuACpyZqmzbEsq4kxtpRzfgsRVThjIQBnOOdHGGMfdnR0iJPRDV1/A/S02zBdMZSwAAAAAElFTkSuQmCC") 6 3, pointer !important;
+      }
+    
+      html,
+      body,
+      body select,
+      body .sweezy-custom-cursor-default-hover {
+        cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABOtJREFUWEe913tsFEUcB/Dv7O3ttZRSykNNc7R3hsQokiCiYjCYEEgqKCH2dRI1EjBCFGMI8Ifx+YftVTQ+ImI0MSYaosT+wR/yUAwRFSWGEq34CJKd7V1bSoGDPu56u7PzM3O7V1oooU8mudxudm9+n/3NzG9uWTQa3UBEOwB0MMZipmn+gRvYWDQa7Y5WhIrPddnoSVO3EOLhRCLx440yKIATq5qhr6uegdhGE6mLIi2Jqi3L2n8jEB7g0VK9/pmbkbggUP0cR9d54QB43DTNPZON8ABrSvX6p28CJOFcn0TtFgtmmy2J6HnLsnZOJiIHqHtkut6w3gPAJfTahLWvJNHyXz+I6CXLst6YLIQHWDVdb1g32wMID5FxCU+92YFjJzMA0VuWZW2bDIQC2LGVJcH6J2blAsOF9y0JQhI27erCd8f7wBg+45xvUFcnEqIA2VhliVG/dqYP8DKQ/xABL+6+gN0/90LTsJdzXgcgO1GIHKBuxTSjITZjKED4mVAYIsT3X8KH3/dCD7BD6XR6TWdnZ99EIDzAsmKjodYH+HMgl4H8sfqWhJ1H02g82I2AhmOO46xqa2s7P16EB3iw2Giomu5lYHDQq86BPScz2P5ND5iGv4UQK5LJZNt4EDlA7dKpRnx1yTAAAEJ6007BcseEfdzB5n09kAB3XXd5IpE4PVaEB3igyIivHAZwVTY8gML8cMbFhm97lUltYpVj3cQ8wOIiI15ZfHUGhhuOfCYE4URK4snDGfRJXBRCrB7LJuYB7plixFdMvQy4VmD19I6/RHP3SJzqIcSOZnHBoTSAKs75gdEMhwdYWGjEl031J6D0x3tQoMGgYY4TGYmaZoGzNmwp5VrLsppGilCA/toFhaH40ilDJhrydUBNvFza/So5+FyVbr98d2YJj510wbOs2zTNktEB5heE4ksKLwcaCOgHv2IVtGcIX7a7aE5JnE4DKUHISoABIKCDc142KkDN7aFQ4+KCoTVgAOE/vZ/63y65qGsWUJsDgAQR/QngDBH1Auh3XffzZDLZMjrAbUaocVFoaAby+0F+0vnLr+msxJZTLhjRVsuy3h5poGvdl5sDNXODocYFhgcg4EinQFPCRVda4tmKAJYU+YXIJTgu4b7fJVIujnPOF00EIFNzq17QOM8AT0tsa87i1/MSOkOGMeaUGZh25K4ANDtfESXePwu808VAJJdZlnV4PAiVgUx1RC+4v5Rh2wlbFbp+AI0A3gVQ5wIffRxlqFRZ8IelRxDuNjVVEvZxzleNF9A1M4hZZ7KEoMZaiKiWc/6P6jQcDhcGg0FrfgHN3ls+aKNyCS+nNHzRq5GU8s7W1ta/xopg5eXlNZqmvQ7gF9u2N7e3t6uKNtAikcirgvDa3rDEwkB+WRLaHWBxKoQA0aec8/VjBlzvh2VlZbMMw2hdXkCFn5Q6lwuSS9iUDuKg0FX1i1iW1XG9voa7nlvM12uRSGSXANv4U2kWFeTviC7QIhgesgthMGw3TVO93o26jQgQDofn6rr+b8xwtYagPfD33XGBubIIGuE9zvkLo44Or3qOqEWj0a81oqrdwX7cS24OsYMMfEAhaKAY5/yrEXV0xU0jBlRUVEQZY0cl2C13wMUlMLRBU8EP+EtRTipAdT5nzpyyQCCwFcA8VaSI6BDnXL26qXfJMbX/AaJ6SE5q1mCzAAAAAElFTkSuQmCC") 1 1, auto !important;
+      }
+    </style></head>
+<body __processed_bbe8f3b1-1cba-47ed-9c91-891031ddb4f4__="true">
 
 <!-- FULL SCREEN GIF BACKGROUND -->
 <div id="bg-gif">
@@ -375,25 +399,47 @@
 
   <div class="main">
     <div class="tabs">
-      <button class="tab-btn active" data-shift="pagi" onclick="switchTab('pagi')">☀ PAGI</button>
+      <button class="tab-btn" data-shift="pagi" onclick="switchTab('pagi')">☀ PAGI</button>
       <button class="tab-btn" data-shift="sore" onclick="switchTab('sore')">◐ SORE</button>
-      <button class="tab-btn" data-shift="malam" onclick="switchTab('malam')">☾ MALAM</button>
+      <button class="tab-btn active" data-shift="malam" onclick="switchTab('malam')">☾ MALAM</button>
     </div>
 
     <!-- PAGI -->
-    <div class="panel active" id="panel-pagi">
+    <div class="panel" id="panel-pagi">
       <div class="two-col">
         <div class="sidebar">
           <div class="sidebar-header">
             <div class="shift-dot" style="background:var(--pagi-neon);box-shadow:0 0 8px var(--pagi-neon)"></div>
             <h3 style="color:var(--pagi-neon)">SHIFT PAGI</h3>
-            <span id="count-pagi">0 STAFF</span>
+            <span id="count-pagi">11 STAFF</span>
           </div>
-          <div class="staff-list" id="list-pagi"></div>
+          <div class="staff-list" id="list-pagi"><div class="staff-item"><span class="staff-num">01</span>
+      <input class="staff-name-input" value="Muhammad Rizki" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[0]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',0)">×</button></div><div class="staff-item"><span class="staff-num">02</span>
+      <input class="staff-name-input" value="Raka Julian Nasmul" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[1]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',1)">×</button></div><div class="staff-item"><span class="staff-num">03</span>
+      <input class="staff-name-input" value="Aditia Darasetio" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[2]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',2)">×</button></div><div class="staff-item"><span class="staff-num">04</span>
+      <input class="staff-name-input" value="Tiara Dwi Septiani" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[3]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',3)">×</button></div><div class="staff-item"><span class="staff-num">05</span>
+      <input class="staff-name-input" value="Hadi Eka Prastyo" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[4]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',4)">×</button></div><div class="staff-item"><span class="staff-num">06</span>
+      <input class="staff-name-input" value="Roslaini" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[5]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',5)">×</button></div><div class="staff-item"><span class="staff-num">07</span>
+      <input class="staff-name-input" value="Wilis Andervid" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[6]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',6)">×</button></div><div class="staff-item"><span class="staff-num">08</span>
+      <input class="staff-name-input" value="Boy Chandra" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[7]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',7)">×</button></div><div class="staff-item"><span class="staff-num">09</span>
+      <input class="staff-name-input" value="Mega Sandeni" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[8]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',8)">×</button></div><div class="staff-item"><span class="staff-num">10</span>
+      <input class="staff-name-input" value="Siti Hawa" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[9]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',9)">×</button></div><div class="staff-item"><span class="staff-num">11</span>
+      <input class="staff-name-input" value="Raja Khoir" placeholder="NAMA STAFF..." oninput="state['pagi'].staff[10]=this.value;updateCount('pagi')">
+      <button class="btn-remove" onclick="removeStaff('pagi',10)">×</button></div></div>
           <div class="config-row">
             <div class="config-field"><label>TGL MULAI</label><input type="date" id="date-pagi"></div>
             <div class="config-field"><label>PIKET/HARI</label>
-              <select id="perday-pagi"><option value="2" selected>2 ORANG</option><option value="3">3 ORANG</option></select>
+              <select id="perday-pagi"><option value="2" selected="">2 ORANG</option><option value="3">3 ORANG</option></select>
             </div>
           </div>
           <div class="sidebar-actions">
@@ -401,9 +447,69 @@
             <button class="btn btn-generate" data-shift="pagi" onclick="generateSchedule('pagi')">⚡ GENERATE</button>
           </div>
         </div>
-        <div class="schedule-card" id="output-pagi">
-          <div class="empty-state"><div class="empty-icon">📡</div><div>INPUT STAFF → KLIK ⚡ GENERATE</div></div>
-        </div>
+        <div class="schedule-card" id="output-pagi"><div class="schedule-top">
+    <div>
+      <h2 style="color:var(--pagi-neon);text-shadow:0 0 14px var(--pagi-neon)">☀ SHIFT PAGI</h2>
+      <div class="schedule-meta">11 STAFF · 2 PIKET/HARI · 14 HARI</div>
+    </div>
+    <button class="btn-print" onclick="window.print()">🖨 PRINT</button>
+  </div><div class="week-block"><div class="week-label" style="color:var(--pagi-neon)">MINGGU 1</div><div class="days-grid"><div class="day-card" data-shift="pagi">
+        <div class="day-name">SENIN</div>
+        <div class="day-date">31/03</div>
+        <div class="piket-name">Muhammad Rizki</div><div class="piket-name">Raka Julian Nasmul</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">SELASA</div>
+        <div class="day-date">01/04</div>
+        <div class="piket-name">Aditia Darasetio</div><div class="piket-name">Tiara Dwi Septiani</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">RABU</div>
+        <div class="day-date">02/04</div>
+        <div class="piket-name">Hadi Eka Prastyo</div><div class="piket-name">Roslaini</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">KAMIS</div>
+        <div class="day-date">03/04</div>
+        <div class="piket-name">Wilis Andervid</div><div class="piket-name">Boy Chandra</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">JUMAT</div>
+        <div class="day-date">04/04</div>
+        <div class="piket-name">Mega Sandeni</div><div class="piket-name">Siti Hawa</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">SABTU</div>
+        <div class="day-date">05/04</div>
+        <div class="piket-name">Raja Khoir</div><div class="piket-name">Muhammad Rizki</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">MINGGU</div>
+        <div class="day-date">06/04</div>
+        <div class="piket-name">Raka Julian Nasmul</div><div class="piket-name">Aditia Darasetio</div>
+      </div></div></div><div class="week-block"><div class="week-label" style="color:var(--pagi-neon)">MINGGU 2</div><div class="days-grid"><div class="day-card" data-shift="pagi">
+        <div class="day-name">SENIN</div>
+        <div class="day-date">07/04</div>
+        <div class="piket-name">Tiara Dwi Septiani</div><div class="piket-name">Hadi Eka Prastyo</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">SELASA</div>
+        <div class="day-date">08/04</div>
+        <div class="piket-name">Roslaini</div><div class="piket-name">Wilis Andervid</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">RABU</div>
+        <div class="day-date">09/04</div>
+        <div class="piket-name">Boy Chandra</div><div class="piket-name">Mega Sandeni</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">KAMIS</div>
+        <div class="day-date">10/04</div>
+        <div class="piket-name">Siti Hawa</div><div class="piket-name">Raja Khoir</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">JUMAT</div>
+        <div class="day-date">11/04</div>
+        <div class="piket-name">Muhammad Rizki</div><div class="piket-name">Raka Julian Nasmul</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">SABTU</div>
+        <div class="day-date">12/04</div>
+        <div class="piket-name">Aditia Darasetio</div><div class="piket-name">Tiara Dwi Septiani</div>
+      </div><div class="day-card" data-shift="pagi">
+        <div class="day-name">MINGGU</div>
+        <div class="day-date">13/04</div>
+        <div class="piket-name">Hadi Eka Prastyo</div><div class="piket-name">Roslaini</div>
+      </div></div></div><div class="rekap-section"><div class="rekap-title">// REKAP JUMLAH PIKET</div><div class="rekap-grid"><span class="rekap-badge" data-shift="pagi">Muhammad Rizki · <strong>3x</strong></span><span class="rekap-badge" data-shift="pagi">Raka Julian Nasmul · <strong>3x</strong></span><span class="rekap-badge" data-shift="pagi">Aditia Darasetio · <strong>3x</strong></span><span class="rekap-badge" data-shift="pagi">Tiara Dwi Septiani · <strong>3x</strong></span><span class="rekap-badge" data-shift="pagi">Hadi Eka Prastyo · <strong>3x</strong></span><span class="rekap-badge" data-shift="pagi">Roslaini · <strong>3x</strong></span><span class="rekap-badge" data-shift="pagi">Wilis Andervid · <strong>2x</strong></span><span class="rekap-badge" data-shift="pagi">Boy Chandra · <strong>2x</strong></span><span class="rekap-badge" data-shift="pagi">Mega Sandeni · <strong>2x</strong></span><span class="rekap-badge" data-shift="pagi">Siti Hawa · <strong>2x</strong></span><span class="rekap-badge" data-shift="pagi">Raja Khoir · <strong>2x</strong></span></div></div></div>
       </div>
     </div>
 
@@ -420,7 +526,7 @@
           <div class="config-row">
             <div class="config-field"><label>TGL MULAI</label><input type="date" id="date-sore"></div>
             <div class="config-field"><label>PIKET/HARI</label>
-              <select id="perday-sore"><option value="2" selected>2 ORANG</option><option value="3">3 ORANG</option></select>
+              <select id="perday-sore"><option value="2" selected="">2 ORANG</option><option value="3">3 ORANG</option></select>
             </div>
           </div>
           <div class="sidebar-actions">
@@ -435,19 +541,29 @@
     </div>
 
     <!-- MALAM -->
-    <div class="panel" id="panel-malam">
+    <div class="panel active" id="panel-malam">
       <div class="two-col">
         <div class="sidebar">
           <div class="sidebar-header">
             <div class="shift-dot" style="background:var(--malam-neon);box-shadow:0 0 8px var(--malam-neon)"></div>
             <h3 style="color:var(--malam-neon)">SHIFT MALAM</h3>
-            <span id="count-malam">0 STAFF</span>
+            <span id="count-malam">5 STAFF</span>
           </div>
-          <div class="staff-list" id="list-malam"></div>
+          <div class="staff-list" id="list-malam"><div class="staff-item"><span class="staff-num">01</span>
+      <input class="staff-name-input" value="MUHAMMAD RIDAI IRWANSYAH" placeholder="NAMA STAFF..." oninput="state['malam'].staff[0]=this.value;updateCount('malam')">
+      <button class="btn-remove" onclick="removeStaff('malam',0)">×</button></div><div class="staff-item"><span class="staff-num">02</span>
+      <input class="staff-name-input" value="MUHAMMAD RIDAI IRWANSYAH" placeholder="NAMA STAFF..." oninput="state['malam'].staff[1]=this.value;updateCount('malam')">
+      <button class="btn-remove" onclick="removeStaff('malam',1)">×</button></div><div class="staff-item"><span class="staff-num">03</span>
+      <input class="staff-name-input" value="MUHAMMAD RIDAI IRWANSYAH" placeholder="NAMA STAFF..." oninput="state['malam'].staff[2]=this.value;updateCount('malam')">
+      <button class="btn-remove" onclick="removeStaff('malam',2)">×</button></div><div class="staff-item"><span class="staff-num">04</span>
+      <input class="staff-name-input" value="MUHAMMAD RIDAI IRWANSYAH" placeholder="NAMA STAFF..." oninput="state['malam'].staff[3]=this.value;updateCount('malam')">
+      <button class="btn-remove" onclick="removeStaff('malam',3)">×</button></div><div class="staff-item"><span class="staff-num">05</span>
+      <input class="staff-name-input" value="" placeholder="NAMA STAFF..." oninput="state['malam'].staff[4]=this.value;updateCount('malam')">
+      <button class="btn-remove" onclick="removeStaff('malam',4)">×</button></div></div>
           <div class="config-row">
-            <div class="config-field"><label>TGL MULAI</label><input type="date" id="date-malam"></div>
-            <div class="config-field"><label>PIKET/HARI</label>
-              <select id="perday-malam"><option value="2" selected>2 ORANG</option><option value="3">3 ORANG</option></select>
+            <div class="config-field"><label class="sweezy-custom-cursor-default-hover" style="null;cursor: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABOtJREFUWEe913tsFEUcB/Dv7O3ttZRSykNNc7R3hsQokiCiYjCYEEgqKCH2dRI1EjBCFGMI8Ifx+YftVTQ+ImI0MSYaosT+wR/yUAwRFSWGEq34CJKd7V1bSoGDPu56u7PzM3O7V1oooU8mudxudm9+n/3NzG9uWTQa3UBEOwB0MMZipmn+gRvYWDQa7Y5WhIrPddnoSVO3EOLhRCLx440yKIATq5qhr6uegdhGE6mLIi2Jqi3L2n8jEB7g0VK9/pmbkbggUP0cR9d54QB43DTNPZON8ABrSvX6p28CJOFcn0TtFgtmmy2J6HnLsnZOJiIHqHtkut6w3gPAJfTahLWvJNHyXz+I6CXLst6YLIQHWDVdb1g32wMID5FxCU+92YFjJzMA0VuWZW2bDIQC2LGVJcH6J2blAsOF9y0JQhI27erCd8f7wBg+45xvUFcnEqIA2VhliVG/dqYP8DKQ/xABL+6+gN0/90LTsJdzXgcgO1GIHKBuxTSjITZjKED4mVAYIsT3X8KH3/dCD7BD6XR6TWdnZ99EIDzAsmKjodYH+HMgl4H8sfqWhJ1H02g82I2AhmOO46xqa2s7P16EB3iw2Giomu5lYHDQq86BPScz2P5ND5iGv4UQK5LJZNt4EDlA7dKpRnx1yTAAAEJ6007BcseEfdzB5n09kAB3XXd5IpE4PVaEB3igyIivHAZwVTY8gML8cMbFhm97lUltYpVj3cQ8wOIiI15ZfHUGhhuOfCYE4URK4snDGfRJXBRCrB7LJuYB7plixFdMvQy4VmD19I6/RHP3SJzqIcSOZnHBoTSAKs75gdEMhwdYWGjEl031J6D0x3tQoMGgYY4TGYmaZoGzNmwp5VrLsppGilCA/toFhaH40ilDJhrydUBNvFza/So5+FyVbr98d2YJj510wbOs2zTNktEB5heE4ksKLwcaCOgHv2IVtGcIX7a7aE5JnE4DKUHISoABIKCDc142KkDN7aFQ4+KCoTVgAOE/vZ/63y65qGsWUJsDgAQR/QngDBH1Auh3XffzZDLZMjrAbUaocVFoaAby+0F+0vnLr+msxJZTLhjRVsuy3h5poGvdl5sDNXODocYFhgcg4EinQFPCRVda4tmKAJYU+YXIJTgu4b7fJVIujnPOF00EIFNzq17QOM8AT0tsa87i1/MSOkOGMeaUGZh25K4ANDtfESXePwu808VAJJdZlnV4PAiVgUx1RC+4v5Rh2wlbFbp+AI0A3gVQ5wIffRxlqFRZ8IelRxDuNjVVEvZxzleNF9A1M4hZZ7KEoMZaiKiWc/6P6jQcDhcGg0FrfgHN3ls+aKNyCS+nNHzRq5GU8s7W1ta/xopg5eXlNZqmvQ7gF9u2N7e3t6uKNtAikcirgvDa3rDEwkB+WRLaHWBxKoQA0aec8/VjBlzvh2VlZbMMw2hdXkCFn5Q6lwuSS9iUDuKg0FX1i1iW1XG9voa7nlvM12uRSGSXANv4U2kWFeTviC7QIhgesgthMGw3TVO93o26jQgQDofn6rr+b8xwtYagPfD33XGBubIIGuE9zvkLo44Or3qOqEWj0a81oqrdwX7cS24OsYMMfEAhaKAY5/yrEXV0xU0jBlRUVEQZY0cl2C13wMUlMLRBU8EP+EtRTipAdT5nzpyyQCCwFcA8VaSI6BDnXL26qXfJMbX/AaJ6SE5q1mCzAAAAAElFTkSuQmCC&quot;) 1 1, auto !important;">TGL MULAI</label><input type="date" id="date-malam" class="sweezy-custom-cursor-default-hover" style="null;cursor: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABOtJREFUWEe913tsFEUcB/Dv7O3ttZRSykNNc7R3hsQokiCiYjCYEEgqKCH2dRI1EjBCFGMI8Ifx+YftVTQ+ImI0MSYaosT+wR/yUAwRFSWGEq34CJKd7V1bSoGDPu56u7PzM3O7V1oooU8mudxudm9+n/3NzG9uWTQa3UBEOwB0MMZipmn+gRvYWDQa7Y5WhIrPddnoSVO3EOLhRCLx440yKIATq5qhr6uegdhGE6mLIi2Jqi3L2n8jEB7g0VK9/pmbkbggUP0cR9d54QB43DTNPZON8ABrSvX6p28CJOFcn0TtFgtmmy2J6HnLsnZOJiIHqHtkut6w3gPAJfTahLWvJNHyXz+I6CXLst6YLIQHWDVdb1g32wMID5FxCU+92YFjJzMA0VuWZW2bDIQC2LGVJcH6J2blAsOF9y0JQhI27erCd8f7wBg+45xvUFcnEqIA2VhliVG/dqYP8DKQ/xABL+6+gN0/90LTsJdzXgcgO1GIHKBuxTSjITZjKED4mVAYIsT3X8KH3/dCD7BD6XR6TWdnZ99EIDzAsmKjodYH+HMgl4H8sfqWhJ1H02g82I2AhmOO46xqa2s7P16EB3iw2Giomu5lYHDQq86BPScz2P5ND5iGv4UQK5LJZNt4EDlA7dKpRnx1yTAAAEJ6007BcseEfdzB5n09kAB3XXd5IpE4PVaEB3igyIivHAZwVTY8gML8cMbFhm97lUltYpVj3cQ8wOIiI15ZfHUGhhuOfCYE4URK4snDGfRJXBRCrB7LJuYB7plixFdMvQy4VmD19I6/RHP3SJzqIcSOZnHBoTSAKs75gdEMhwdYWGjEl031J6D0x3tQoMGgYY4TGYmaZoGzNmwp5VrLsppGilCA/toFhaH40ilDJhrydUBNvFza/So5+FyVbr98d2YJj510wbOs2zTNktEB5heE4ksKLwcaCOgHv2IVtGcIX7a7aE5JnE4DKUHISoABIKCDc142KkDN7aFQ4+KCoTVgAOE/vZ/63y65qGsWUJsDgAQR/QngDBH1Auh3XffzZDLZMjrAbUaocVFoaAby+0F+0vnLr+msxJZTLhjRVsuy3h5poGvdl5sDNXODocYFhgcg4EinQFPCRVda4tmKAJYU+YXIJTgu4b7fJVIujnPOF00EIFNzq17QOM8AT0tsa87i1/MSOkOGMeaUGZh25K4ANDtfESXePwu808VAJJdZlnV4PAiVgUx1RC+4v5Rh2wlbFbp+AI0A3gVQ5wIffRxlqFRZ8IelRxDuNjVVEvZxzleNF9A1M4hZZ7KEoMZaiKiWc/6P6jQcDhcGg0FrfgHN3ls+aKNyCS+nNHzRq5GU8s7W1ta/xopg5eXlNZqmvQ7gF9u2N7e3t6uKNtAikcirgvDa3rDEwkB+WRLaHWBxKoQA0aec8/VjBlzvh2VlZbMMw2hdXkCFn5Q6lwuSS9iUDuKg0FX1i1iW1XG9voa7nlvM12uRSGSXANv4U2kWFeTviC7QIhgesgthMGw3TVO93o26jQgQDofn6rr+b8xwtYagPfD33XGBubIIGuE9zvkLo44Or3qOqEWj0a81oqrdwX7cS24OsYMMfEAhaKAY5/yrEXV0xU0jBlRUVEQZY0cl2C13wMUlMLRBU8EP+EtRTipAdT5nzpyyQCCwFcA8VaSI6BDnXL26qXfJMbX/AaJ6SE5q1mCzAAAAAElFTkSuQmCC&quot;) 1 1, auto !important;"></div>
+            <div class="config-field"><label class="sweezy-custom-cursor-default-hover" style="null;cursor: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAABOtJREFUWEe913tsFEUcB/Dv7O3ttZRSykNNc7R3hsQokiCiYjCYEEgqKCH2dRI1EjBCFGMI8Ifx+YftVTQ+ImI0MSYaosT+wR/yUAwRFSWGEq34CJKd7V1bSoGDPu56u7PzM3O7V1oooU8mudxudm9+n/3NzG9uWTQa3UBEOwB0MMZipmn+gRvYWDQa7Y5WhIrPddnoSVO3EOLhRCLx440yKIATq5qhr6uegdhGE6mLIi2Jqi3L2n8jEB7g0VK9/pmbkbggUP0cR9d54QB43DTNPZON8ABrSvX6p28CJOFcn0TtFgtmmy2J6HnLsnZOJiIHqHtkut6w3gPAJfTahLWvJNHyXz+I6CXLst6YLIQHWDVdb1g32wMID5FxCU+92YFjJzMA0VuWZW2bDIQC2LGVJcH6J2blAsOF9y0JQhI27erCd8f7wBg+45xvUFcnEqIA2VhliVG/dqYP8DKQ/xABL+6+gN0/90LTsJdzXgcgO1GIHKBuxTSjITZjKED4mVAYIsT3X8KH3/dCD7BD6XR6TWdnZ99EIDzAsmKjodYH+HMgl4H8sfqWhJ1H02g82I2AhmOO46xqa2s7P16EB3iw2Giomu5lYHDQq86BPScz2P5ND5iGv4UQK5LJZNt4EDlA7dKpRnx1yTAAAEJ6007BcseEfdzB5n09kAB3XXd5IpE4PVaEB3igyIivHAZwVTY8gML8cMbFhm97lUltYpVj3cQ8wOIiI15ZfHUGhhuOfCYE4URK4snDGfRJXBRCrB7LJuYB7plixFdMvQy4VmD19I6/RHP3SJzqIcSOZnHBoTSAKs75gdEMhwdYWGjEl031J6D0x3tQoMGgYY4TGYmaZoGzNmwp5VrLsppGilCA/toFhaH40ilDJhrydUBNvFza/So5+FyVbr98d2YJj510wbOs2zTNktEB5heE4ksKLwcaCOgHv2IVtGcIX7a7aE5JnE4DKUHISoABIKCDc142KkDN7aFQ4+KCoTVgAOE/vZ/63y65qGsWUJsDgAQR/QngDBH1Auh3XffzZDLZMjrAbUaocVFoaAby+0F+0vnLr+msxJZTLhjRVsuy3h5poGvdl5sDNXODocYFhgcg4EinQFPCRVda4tmKAJYU+YXIJTgu4b7fJVIujnPOF00EIFNzq17QOM8AT0tsa87i1/MSOkOGMeaUGZh25K4ANDtfESXePwu808VAJJdZlnV4PAiVgUx1RC+4v5Rh2wlbFbp+AI0A3gVQ5wIffRxlqFRZ8IelRxDuNjVVEvZxzleNF9A1M4hZZ7KEoMZaiKiWc/6P6jQcDhcGg0FrfgHN3ls+aKNyCS+nNHzRq5GU8s7W1ta/xopg5eXlNZqmvQ7gF9u2N7e3t6uKNtAikcirgvDa3rDEwkB+WRLaHWBxKoQA0aec8/VjBlzvh2VlZbMMw2hdXkCFn5Q6lwuSS9iUDuKg0FX1i1iW1XG9voa7nlvM12uRSGSXANv4U2kWFeTviC7QIhgesgthMGw3TVO93o26jQgQDofn6rr+b8xwtYagPfD33XGBubIIGuE9zvkLo44Or3qOqEWj0a81oqrdwX7cS24OsYMMfEAhaKAY5/yrEXV0xU0jBlRUVEQZY0cl2C13wMUlMLRBU8EP+EtRTipAdT5nzpyyQCCwFcA8VaSI6BDnXL26qXfJMbX/AaJ6SE5q1mCzAAAAAElFTkSuQmCC&quot;) 1 1, auto !important;">PIKET/HARI</label>
+              <select id="perday-malam"><option value="2" selected="">2 ORANG</option><option value="3">3 ORANG</option></select>
             </div>
           </div>
           <div class="sidebar-actions">
@@ -455,9 +571,69 @@
             <button class="btn btn-generate" data-shift="malam" onclick="generateSchedule('malam')">⚡ GENERATE</button>
           </div>
         </div>
-        <div class="schedule-card" id="output-malam">
-          <div class="empty-state"><div class="empty-icon">📡</div><div>INPUT STAFF → KLIK ⚡ GENERATE</div></div>
-        </div>
+        <div class="schedule-card" id="output-malam"><div class="schedule-top">
+    <div>
+      <h2 style="color:var(--malam-neon);text-shadow:0 0 14px var(--malam-neon)">☾ SHIFT MALAM</h2>
+      <div class="schedule-meta">5 STAFF · 2 PIKET/HARI · 14 HARI</div>
+    </div>
+    <button class="btn-print" onclick="window.print()">🖨 PRINT</button>
+  </div><div class="week-block"><div class="week-label" style="color:var(--malam-neon)">MINGGU 1</div><div class="days-grid"><div class="day-card" data-shift="malam">
+        <div class="day-name">SENIN</div>
+        <div class="day-date">31/03</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">SELASA</div>
+        <div class="day-date">01/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">RABU</div>
+        <div class="day-date">02/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">KAMIS</div>
+        <div class="day-date">03/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">JUMAT</div>
+        <div class="day-date">04/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">SABTU</div>
+        <div class="day-date">05/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">MINGGU</div>
+        <div class="day-date">06/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div></div></div><div class="week-block"><div class="week-label" style="color:var(--malam-neon)">MINGGU 2</div><div class="days-grid"><div class="day-card" data-shift="malam">
+        <div class="day-name">SENIN</div>
+        <div class="day-date">07/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">SELASA</div>
+        <div class="day-date">08/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">RABU</div>
+        <div class="day-date">09/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">KAMIS</div>
+        <div class="day-date">10/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">JUMAT</div>
+        <div class="day-date">11/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">SABTU</div>
+        <div class="day-date">12/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div><div class="day-card" data-shift="malam">
+        <div class="day-name">MINGGU</div>
+        <div class="day-date">13/04</div>
+        <div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div><div class="piket-name">MUHAMMAD RIDAI IRWANSYAH</div>
+      </div></div></div><div class="rekap-section"><div class="rekap-title">// REKAP JUMLAH PIKET</div><div class="rekap-grid"><span class="rekap-badge" data-shift="malam">MUHAMMAD RIDAI IRWANSYAH · <strong>6x</strong></span><span class="rekap-badge" data-shift="malam">MUHAMMAD RIDAI IRWANSYAH · <strong>6x</strong></span><span class="rekap-badge" data-shift="malam">MUHAMMAD RIDAI IRWANSYAH · <strong>6x</strong></span><span class="rekap-badge" data-shift="malam">MUHAMMAD RIDAI IRWANSYAH · <strong>5x</strong></span><span class="rekap-badge" data-shift="malam">MUHAMMAD RIDAI IRWANSYAH · <strong>5x</strong></span></div></div></div>
       </div>
     </div>
   </div>
@@ -567,5 +743,6 @@ initDates();
 ['pagi','sore','malam'].forEach(s => renderStaffList(s));
 generateSchedule('pagi');
 </script>
-</body>
-</html>
+
+
+<linkclump-plus><span style="margin: 0px auto; border: 0px dotted red; position: absolute; z-index: 2147483646; visibility: hidden;"></span><span style="z-index: 2147483647; display: inline-block; visibility: hidden; position: absolute; top: 0px; left: 0px; line-height: 16px; font-size: 16px; font-weight: 400; color: black; background-color: transparent; padding: 8px; border-radius: 8px; border: 4px double transparent;"></span></linkclump-plus></body></html>
