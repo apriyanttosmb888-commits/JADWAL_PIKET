@@ -24,7 +24,7 @@
     font-family: 'Rajdhani', sans-serif;
     color: var(--text-main);
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: visible;
     position: relative;
   }
 
@@ -215,7 +215,7 @@
     -webkit-backdrop-filter: blur(16px);
     border-radius: 10px;
     border: 1px solid var(--border-neon);
-    overflow: hidden;
+    overflow: visible;
     position: sticky; top: 1rem;
     box-shadow: 0 0 30px rgba(0,212,255,0.07), inset 0 1px 0 rgba(255,255,255,0.05);
   }
@@ -275,7 +275,7 @@
     background: rgba(2, 8, 25, 0.82);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-radius: 10px; border: 1px solid var(--border-neon); overflow: hidden;
+    border-radius: 10px; border: 1px solid var(--border-neon); overflow: visible;
     box-shadow: 0 0 40px rgba(0,212,255,0.05);
   }
   .schedule-top {
@@ -314,7 +314,7 @@
   .day-card[data-shift="malam"] .day-name { color: var(--malam-neon); }
 
   .day-date { font-size: 9px; color: var(--text-muted); margin-bottom: 5px; font-family: 'Orbitron', monospace; }
-  .piket-name { font-size: 10px; font-weight: 600; padding: 3px 6px; border-radius: 3px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; border: 1px solid; }
+  .piket-name { font-size: 10px; font-weight: 600; padding: 3px 6px; border-radius: 3px; margin-bottom: 3px; white-space: nowrap; overflow: visible; text-overflow: ellipsis; border: 1px solid; }
   .day-card[data-shift="pagi"] .piket-name { background: rgba(0,212,255,0.1); color: var(--pagi-neon); border-color: rgba(0,212,255,0.2); }
   .day-card[data-shift="sore"] .piket-name { background: rgba(255,149,0,0.1); color: var(--sore-neon); border-color: rgba(255,149,0,0.2); }
   .day-card[data-shift="malam"] .piket-name { background: rgba(191,95,255,0.1); color: var(--malam-neon); border-color: rgba(191,95,255,0.2); }
