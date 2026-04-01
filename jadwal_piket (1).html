@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jadwal Piket Shift</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --neon-blue: #00D4FF;
+    --neon-pink: #FF2D78;
+    --neon-purple: #BF5FFF;
+    --pagi-neon: #00D4FF;
+    --sore-neon: #FF9500;
+    --malam-neon: #BF5FFF;
+    --text-main: #E8F4FF;
+    --text-muted: #7A9AB5;
+    --border-neon: rgba(0,212,255,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Rajdhani', sans-serif; color: var(--text-main); min-height: 100vh; overflow-x: hidden; position: relative; }
+
+  /* BG */
+  #bg-gif { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:0; }
+  #bg-gif img { width:100%; height:100%; object-fit:cover; object-position:center; display:block; }
+  #bg-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:1; background:rgba(3,5,15,0.78); }
+  #bg-grid { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:2; pointer-events:none;
+    background-image: linear-gradient(rgba(0,212,255,0.06) 1px,transparent 1px), linear-gradient(90deg,rgba(0,212,255,0.06) 1px,transparent 1px);
+    background-size:44px 44px; }
+  #scanlines { position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:3; pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px); }
+  .glow-orb { position:fixed; border-radius:50%; pointer-events:none; z-index:4; filter:blur(60px); }
+  .glow-orb-1 { top:-150px; left:-100px; width:500px; height:500px; background:radial-gradient(circle,rgba(255,45,120,0.18) 0%,transparent 70%); animation:floatOrb 9s ease-in-out infinite; }
+  .glow-orb-2 { bottom:-150px; right:-100px; width:600px; height:600px; background:radial-gradient(circle,rgba(0,212,255,0.15) 0%,transparent 70%); animation:floatOrb 12s ease-in-out infinite reverse; }
+  .glow-orb-3 { top:40%; left:35%; width:350px; height:350px; background:radial-gradient(circle,rgba(191,95,255,0.1) 0%,transparent 70%); animation:floatOrb 15s ease-in-out infinite; }
+  @keyframes floatOrb { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(20px,-25px) scale(1.08)} }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.1} }
+
+  #app { position:relative; z-index:10; min-height:100vh; }
+
+  /* HEADER */
+  header { padding:1.25rem 2rem; border-bottom:1px solid rgba(0,212,255,0.2); background:rgba(0,5,20,0.6); backdrop-filter:blur(12px); position:relative; }
+  header::after { content:''; position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--neon-blue) 30%,var(--neon-pink) 70%,transparent); opacity:0.7; }
+  .header-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; }
+  header h1 { font-family:'Orbitron',monospace; font-size:1.5rem; font-weight:900; letter-spacing:3px;
+    background:linear-gradient(90deg,var(--neon-blue),var(--neon-pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+    filter:drop-shadow(0 0 20px rgba(0,212,255,0.5)); }
+  header p { font-size:10px; color:var(--text-muted); letter-spacing:1.5px; margin-top:4px; font-family:'Orbitron',monospace; }
+  .header-right { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .status-chip { display:inline-flex; align-items:center; gap:7px; border:1px solid rgba(0,212,255,0.4); border-radius:4px; font-family:'Orbitron',monospace; font-size:10px; font-weight:700; padding:5px 12px; letter-spacing:1px; color:var(--neon-blue); background:rgba(0,212,255,0.08); }
+  .status-dot { width:7px; height:7px; border-radius:50%; background:var(--neon-blue); box-shadow:0 0 8px var(--neon-blue); animation:blink 1.5s ease-in-out infinite; }
+
+  /* HEADER BUTTONS */
+  .btn-share { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:4px; border:1px solid rgba(0,212,255,0.4); background:rgba(0,212,255,0.08); color:var(--neon-blue); font-family:'Orbitron',monospace; font-size:10px; font-weight:700; letter-spacing:1px; cursor:pointer; transition:all 0.2s; }
+  .btn-share:hover { background:rgba(0,212,255,0.18); box-shadow:0 0 14px rgba(0,212,255,0.25); }
+  .btn-reset-period { display:inline-flex; align-items:center; gap:6px; padding:5px 14px; border-radius:4px; border:1px solid rgba(255,45,120,0.5); background:rgba(255,45,120,0.08); color:var(--neon-pink); font-family:'Orbitron',monospace; font-size:10px; font-weight:700; letter-spacing:1px; cursor:pointer; transition:all 0.2s; }
+  .btn-reset-period:hover { background:rgba(255,45,120,0.18); box-shadow:0 0 14px rgba(255,45,120,0.25); }
+
+  .main { max-width:1140px; margin:0 auto; padding:1.5rem 1.5rem; }
+
+  /* TABS */
+  .tabs { display:flex; gap:4px; margin-bottom:1.25rem; background:rgba(0,5,20,0.7); backdrop-filter:blur(10px); padding:5px; border-radius:8px; border:1px solid var(--border-neon); width:fit-content; }
+  .tab-btn { padding:8px 24px; border:1px solid transparent; border-radius:6px; font-family:'Orbitron',monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; cursor:pointer; background:transparent; color:var(--text-muted); transition:all 0.2s; }
+  .tab-btn:hover:not(.active) { color:var(--text-main); background:rgba(255,255,255,0.05); }
+  .tab-btn.active[data-shift="pagi"] { background:rgba(0,212,255,0.12); border-color:var(--pagi-neon); color:var(--pagi-neon); box-shadow:0 0 20px rgba(0,212,255,0.3); text-shadow:0 0 10px var(--pagi-neon); }
+  .tab-btn.active[data-shift="sore"] { background:rgba(255,149,0,0.12); border-color:var(--sore-neon); color:var(--sore-neon); box-shadow:0 0 20px rgba(255,149,0,0.3); text-shadow:0 0 10px var(--sore-neon); }
+  .tab-btn.active[data-shift="malam"] { background:rgba(191,95,255,0.12); border-color:var(--malam-neon); color:var(--malam-neon); box-shadow:0 0 20px rgba(191,95,255,0.3); text-shadow:0 0 10px var(--malam-neon); }
+
+  .panel { display:none; }
+  .panel.active { display:block; }
+  .two-col { display:grid; grid-template-columns:320px 1fr; gap:1.25rem; align-items:start; }
+  @media (max-width:768px) { .two-col { grid-template-columns:1fr; } }
+
+  /* SIDEBAR */
+  .sidebar { background:rgba(2,8,25,0.85); backdrop-filter:blur(16px); border-radius:10px; border:1px solid var(--border-neon); overflow:visible; position:sticky; top:1rem; box-shadow:0 0 30px rgba(0,212,255,0.07); }
+  .sidebar-header { padding:0.85rem 1.1rem; border-bottom:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; gap:9px; background:rgba(0,0,0,0.25); border-radius:10px 10px 0 0; }
+  .shift-dot { width:8px; height:8px; border-radius:50%; animation:blink 2s ease-in-out infinite; }
+  .sidebar-header h3 { font-family:'Orbitron',monospace; font-size:11px; font-weight:700; letter-spacing:1.5px; }
+  .sidebar-header span { font-size:10px; color:var(--text-muted); margin-left:auto; font-family:'Orbitron',monospace; }
+  .staff-list { padding:0.65rem; display:flex; flex-direction:column; gap:4px; max-height:360px; overflow-y:auto; overflow-x:visible; scrollbar-width:thin; scrollbar-color:rgba(0,212,255,0.2) transparent; }
+  .staff-item { display:flex; align-items:center; gap:7px; padding:6px 9px; background:rgba(255,255,255,0.04); border-radius:5px; border:1px solid rgba(255,255,255,0.07); transition:all 0.2s; overflow:visible; min-height:34px; }
+  .staff-item:focus-within { border-color:rgba(0,212,255,0.3); background:rgba(0,212,255,0.05); }
+  .staff-num { font-size:10px; color:var(--text-muted); min-width:20px; font-family:'Orbitron',monospace; font-weight:700; flex-shrink:0; }
+  .staff-name-input { flex:1; border:none; background:transparent; font-family:'Rajdhani',sans-serif; font-size:13px; font-weight:500; color:var(--text-main); outline:none; min-width:0; width:100%; }
+  .staff-name-input::placeholder { color:rgba(122,154,181,0.35); font-style:italic; font-size:12px; }
+  .btn-remove { background:none; border:none; cursor:pointer; color:rgba(122,154,181,0.4); font-size:16px; line-height:1; padding:0 2px; transition:all 0.15s; flex-shrink:0; }
+  .btn-remove:hover { color:var(--neon-pink); text-shadow:0 0 8px var(--neon-pink); }
+  .config-row { padding:0.65rem; border-top:1px solid rgba(255,255,255,0.06); display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+  .config-field label { display:block; font-size:9px; color:var(--text-muted); margin-bottom:4px; font-family:'Orbitron',monospace; letter-spacing:0.5px; }
+  .config-field input, .config-field select { width:100%; border:1px solid rgba(255,255,255,0.1); border-radius:5px; padding:5px 8px; font-family:'Rajdhani',sans-serif; font-size:12px; background:rgba(255,255,255,0.05); color:var(--text-main); outline:none; transition:border-color 0.2s; }
+  .config-field input:focus, .config-field select:focus { border-color:rgba(0,212,255,0.5); box-shadow:0 0 8px rgba(0,212,255,0.15); }
+  .config-field select option { background:#060A18; color:var(--text-main); }
+  .sidebar-actions { padding:0.65rem; border-top:1px solid rgba(255,255,255,0.06); display:flex; gap:7px; }
+  .btn { flex:1; padding:9px 12px; border-radius:6px; border:none; font-family:'Orbitron',monospace; font-size:9px; font-weight:700; letter-spacing:1px; cursor:pointer; transition:all 0.2s; }
+  .btn-add { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text-muted); }
+  .btn-add:hover { background:rgba(255,255,255,0.1); color:var(--text-main); }
+  .btn-generate[data-shift="pagi"] { background:rgba(0,212,255,0.1); border:1px solid var(--pagi-neon); color:var(--pagi-neon); box-shadow:0 0 14px rgba(0,212,255,0.25); }
+  .btn-generate[data-shift="sore"] { background:rgba(255,149,0,0.1); border:1px solid var(--sore-neon); color:var(--sore-neon); box-shadow:0 0 14px rgba(255,149,0,0.25); }
+  .btn-generate[data-shift="malam"] { background:rgba(191,95,255,0.1); border:1px solid var(--malam-neon); color:var(--malam-neon); box-shadow:0 0 14px rgba(191,95,255,0.25); }
+  .btn-generate:hover { filter:brightness(1.3); transform:translateY(-1px); }
+  .btn-generate:active { transform:translateY(0); }
+
+  /* OUTPUT */
+  .schedule-card { background:rgba(2,8,25,0.82); backdrop-filter:blur(14px); border-radius:10px; border:1px solid var(--border-neon); overflow:hidden; }
+  .schedule-top { padding:1rem 1.4rem; border-bottom:1px solid rgba(0,212,255,0.12); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; background:rgba(0,212,255,0.03); }
+  .schedule-top h2 { font-family:'Orbitron',monospace; font-size:13px; font-weight:700; letter-spacing:2px; }
+  .schedule-meta { font-size:11px; color:var(--text-muted); letter-spacing:0.5px; margin-top:3px; font-family:'Orbitron',monospace; }
+  .btn-print { padding:6px 14px; border-radius:5px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); font-family:'Orbitron',monospace; font-size:9px; font-weight:700; letter-spacing:1px; cursor:pointer; color:var(--text-muted); transition:all 0.15s; }
+  .btn-print:hover { background:rgba(255,255,255,0.1); color:var(--text-main); }
+  .empty-state { padding:3rem 2rem; text-align:center; color:var(--text-muted); font-family:'Orbitron',monospace; font-size:12px; letter-spacing:1px; }
+  .empty-icon { font-size:2.5rem; margin-bottom:1rem; }
+  .week-block { padding:1rem 1.4rem; border-bottom:1px solid rgba(255,255,255,0.04); }
+  .week-block:last-child { border-bottom:none; }
+  .week-label { font-family:'Orbitron',monospace; font-size:10px; font-weight:700; letter-spacing:2.5px; margin-bottom:0.75rem; display:flex; align-items:center; gap:10px; }
+  .week-label::after { content:''; flex:1; height:1px; background:linear-gradient(90deg,rgba(0,212,255,0.3),transparent); }
+  .days-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; }
+  @media (max-width:600px) { .days-grid { grid-template-columns:repeat(3,1fr); } }
+  .day-card { border-radius:7px; padding:8px 7px; border:1px solid; transition:transform 0.15s,box-shadow 0.15s; }
+  .day-card:hover { transform:translateY(-3px); }
+  .day-card[data-shift="pagi"] { border-color:rgba(0,212,255,0.22); background:rgba(0,212,255,0.05); }
+  .day-card[data-shift="pagi"]:hover { box-shadow:0 0 20px rgba(0,212,255,0.22); border-color:rgba(0,212,255,0.6); }
+  .day-card[data-shift="sore"] { border-color:rgba(255,149,0,0.22); background:rgba(255,149,0,0.05); }
+  .day-card[data-shift="sore"]:hover { box-shadow:0 0 20px rgba(255,149,0,0.22); border-color:rgba(255,149,0,0.6); }
+  .day-card[data-shift="malam"] { border-color:rgba(191,95,255,0.22); background:rgba(191,95,255,0.05); }
+  .day-card[data-shift="malam"]:hover { box-shadow:0 0 20px rgba(191,95,255,0.22); border-color:rgba(191,95,255,0.6); }
+  .day-name { font-family:'Orbitron',monospace; font-size:9px; font-weight:700; letter-spacing:0.5px; margin-bottom:3px; }
+  .day-card[data-shift="pagi"] .day-name { color:var(--pagi-neon); }
+  .day-card[data-shift="sore"] .day-name { color:var(--sore-neon); }
+  .day-card[data-shift="malam"] .day-name { color:var(--malam-neon); }
+  .day-date { font-size:9px; color:var(--text-muted); margin-bottom:5px; font-family:'Orbitron',monospace; }
+  .piket-name { font-size:10px; font-weight:600; padding:3px 6px; border-radius:3px; margin-bottom:3px; white-space:normal; word-break:break-word; overflow:visible; border:1px solid; line-height:1.3; }
+  .day-card[data-shift="pagi"] .piket-name { background:rgba(0,212,255,0.1); color:var(--pagi-neon); border-color:rgba(0,212,255,0.2); }
+  .day-card[data-shift="sore"] .piket-name { background:rgba(255,149,0,0.1); color:var(--sore-neon); border-color:rgba(255,149,0,0.2); }
+  .day-card[data-shift="malam"] .piket-name { background:rgba(191,95,255,0.1); color:var(--malam-neon); border-color:rgba(191,95,255,0.2); }
+  .rekap-section { padding:0.9rem 1.4rem; border-top:1px solid rgba(255,255,255,0.05); background:rgba(0,0,0,0.2); }
+  .rekap-title { font-family:'Orbitron',monospace; font-size:9px; font-weight:700; letter-spacing:2px; color:var(--text-muted); margin-bottom:0.65rem; }
+  .rekap-grid { display:flex; flex-wrap:wrap; gap:5px; }
+  .rekap-badge { font-size:11px; padding:4px 11px; border-radius:4px; font-weight:600; border:1px solid; }
+  .rekap-badge[data-shift="pagi"] { background:rgba(0,212,255,0.07); color:var(--pagi-neon); border-color:rgba(0,212,255,0.2); }
+  .rekap-badge[data-shift="sore"] { background:rgba(255,149,0,0.07); color:var(--sore-neon); border-color:rgba(255,149,0,0.2); }
+  .rekap-badge[data-shift="malam"] { background:rgba(191,95,255,0.07); color:var(--malam-neon); border-color:rgba(191,95,255,0.2); }
+
+  /* TOAST */
+  .toast { position:fixed; bottom:24px; right:24px; z-index:999; border-radius:6px; font-family:'Orbitron',monospace; font-size:10px; padding:10px 18px; letter-spacing:1px; opacity:0; transition:opacity 0.3s,transform 0.3s; transform:translateY(10px); pointer-events:none; }
+  .toast.show { opacity:1; transform:translateY(0); }
+  .toast.blue { background:rgba(0,212,255,0.15); border:1px solid var(--neon-blue); color:var(--neon-blue); box-shadow:0 0 16px rgba(0,212,255,0.2); }
+  .toast.green { background:rgba(0,255,120,0.12); border:1px solid #00FF88; color:#00FF88; box-shadow:0 0 16px rgba(0,255,120,0.2); }
+  .toast.pink { background:rgba(255,45,120,0.15); border:1px solid var(--neon-pink); color:var(--neon-pink); box-shadow:0 0 16px rgba(255,45,120,0.2); }
+
+  /* MODAL RESET */
+  .modal-bg { position:fixed; inset:0; z-index:500; background:rgba(0,0,0,0.75); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; }
+  .modal-bg.open { display:flex; }
+  .modal { background:rgba(2,8,25,0.97); border:1px solid var(--neon-pink); border-radius:12px; padding:2rem; max-width:400px; width:90%; box-shadow:0 0 40px rgba(255,45,120,0.2); }
+  .modal h2 { font-family:'Orbitron',monospace; font-size:14px; font-weight:900; letter-spacing:2px; color:var(--neon-pink); text-shadow:0 0 14px var(--neon-pink); margin-bottom:0.75rem; }
+  .modal p { font-size:13px; color:var(--text-muted); line-height:1.6; margin-bottom:1.25rem; letter-spacing:0.3px; }
+  .modal-warning { background:rgba(255,45,120,0.08); border:1px solid rgba(255,45,120,0.25); border-radius:6px; padding:10px 14px; font-size:12px; color:rgba(255,150,150,0.9); margin-bottom:1.25rem; font-family:'Orbitron',monospace; letter-spacing:0.5px; }
+  .modal-actions { display:flex; gap:10px; }
+  .btn-modal-cancel { flex:1; padding:10px; border-radius:6px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:var(--text-muted); font-family:'Orbitron',monospace; font-size:10px; font-weight:700; letter-spacing:1px; cursor:pointer; transition:all 0.2s; }
+  .btn-modal-cancel:hover { background:rgba(255,255,255,0.1); color:var(--text-main); }
+  .btn-modal-confirm { flex:1; padding:10px; border-radius:6px; border:1px solid var(--neon-pink); background:rgba(255,45,120,0.12); color:var(--neon-pink); font-family:'Orbitron',monospace; font-size:10px; font-weight:700; letter-spacing:1px; cursor:pointer; transition:all 0.2s; }
+  .btn-modal-confirm:hover { background:rgba(255,45,120,0.25); box-shadow:0 0 14px rgba(255,45,120,0.3); }
+
+  /* MODAL SHARE */
+  .modal-share { border-color:var(--neon-blue); box-shadow:0 0 40px rgba(0,212,255,0.2); }
+  .modal-share h2 { color:var(--neon-blue); text-shadow:0 0 14px var(--neon-blue); }
+  .share-url-box { background:rgba(0,212,255,0.05); border:1px solid rgba(0,212,255,0.25); border-radius:6px; padding:10px 12px; font-family:'Rajdhani',monospace; font-size:12px; color:var(--neon-blue); word-break:break-all; margin-bottom:1rem; max-height:80px; overflow-y:auto; line-height:1.5; }
+  .btn-copy-url { width:100%; padding:10px; border-radius:6px; border:1px solid var(--neon-blue); background:rgba(0,212,255,0.1); color:var(--neon-blue); font-family:'Orbitron',monospace; font-size:10px; font-weight:700; letter-spacing:1px; cursor:pointer; transition:all 0.2s; }
+  .btn-copy-url:hover { background:rgba(0,212,255,0.22); box-shadow:0 0 14px rgba(0,212,255,0.3); }
+
+  @media print {
+    #bg-gif,#bg-overlay,#bg-grid,#scanlines,.glow-orb,.modal-bg { display:none!important; }
+    body { background:white!important; color:black!important; }
+    .sidebar,.tabs,.btn-print,header .header-right { display:none!important; }
+    .two-col { grid-template-columns:1fr!important; }
+    .panel { display:block!important; }
+    .days-grid { grid-template-columns:repeat(7,1fr)!important; }
+    .schedule-card { border:1px solid #ccc!important; background:white!important; backdrop-filter:none!important; }
+    .day-card { border:1px solid #ddd!important; background:#fafafa!important; }
+    .piket-name { background:#eee!important; color:#333!important; border-color:#ccc!important; }
+    .day-name { color:#333!important; }
+    .schedule-top h2 { color:#111!important; -webkit-text-fill-color:#111!important; filter:none!important; }
+    .week-label { color:#333!important; -webkit-text-fill-color:#333!important; }
+    .day-date,.schedule-meta,.rekap-title { color:#666!important; }
+    .rekap-badge { background:#f0f0f0!important; color:#333!important; border-color:#ccc!important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="bg-gif"><img src="https://media1.tenor.com/m/S2Sb6DADkCkAAAAd/madraa-uciha.gif" alt="bg"></div>
+<div id="bg-overlay"></div>
+<div id="bg-grid"></div>
+<div id="scanlines"></div>
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+<div class="glow-orb glow-orb-3"></div>
+
+<!-- MODAL RESET -->
+<div class="modal-bg" id="modal-reset">
+  <div class="modal">
+    <h2>⚠ RESET PERIODE</h2>
+    <p>Reset akan menghapus <strong>jadwal yang sudah di-generate</strong> untuk semua shift dan mengosongkan data schedule. Nama staff tetap tersimpan.</p>
+    <div class="modal-warning">⚡ PILIH SHIFT YANG AKAN DI-RESET:</div>
+    <div style="display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--pagi-neon);font-family:'Orbitron',monospace;">
+        <input type="checkbox" id="reset-pagi" checked style="accent-color:var(--pagi-neon);"> PAGI
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--sore-neon);font-family:'Orbitron',monospace;">
+        <input type="checkbox" id="reset-sore" checked style="accent-color:var(--sore-neon);"> SORE
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px;color:var(--malam-neon);font-family:'Orbitron',monospace;">
+        <input type="checkbox" id="reset-malam" checked style="accent-color:var(--malam-neon);"> MALAM
+      </label>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal('reset')">BATAL</button>
+      <button class="btn-modal-confirm" onclick="doReset()">🔄 RESET SEKARANG</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL SHARE -->
+<div class="modal-bg" id="modal-share">
+  <div class="modal modal-share">
+    <h2>📡 BAGIKAN JADWAL</h2>
+    <p>Salin link di bawah dan bagikan ke staff. Jadwal akan langsung tampil saat link dibuka — tanpa perlu generate ulang.</p>
+    <div class="share-url-box" id="share-url-text">Memuat link...</div>
+    <button class="btn-copy-url" onclick="copyShareUrl()">📋 SALIN LINK</button>
+    <button class="btn-modal-cancel" style="width:100%;margin-top:8px;" onclick="closeModal('share')">TUTUP</button>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>// JADWAL PIKET SHIFT</h1>
+        <p>INPUT NAMA STAFF → GENERATE → JADWAL 2 MINGGU OTOMATIS</p>
+      </div>
+      <div class="header-right">
+        <div class="status-chip"><div class="status-dot"></div>SYSTEM ONLINE</div>
+        <button class="btn-share" onclick="openShare()">📡 SHARE</button>
+        <button class="btn-reset-period" onclick="openModal('reset')">🔄 RESET PERIODE</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="tabs">
+      <button class="tab-btn active" data-shift="pagi" onclick="switchTab('pagi')">☀ PAGI</button>
+      <button class="tab-btn" data-shift="sore" onclick="switchTab('sore')">◐ SORE</button>
+      <button class="tab-btn" data-shift="malam" onclick="switchTab('malam')">☾ MALAM</button>
+    </div>
+
+    <!-- PAGI -->
+    <div class="panel active" id="panel-pagi">
+      <div class="two-col">
+        <div class="sidebar">
+          <div class="sidebar-header">
+            <div class="shift-dot" style="background:var(--pagi-neon);box-shadow:0 0 8px var(--pagi-neon)"></div>
+            <h3 style="color:var(--pagi-neon)">SHIFT PAGI</h3>
+            <span id="count-pagi">0 STAFF</span>
+          </div>
+          <div class="staff-list" id="list-pagi"></div>
+          <div class="config-row">
+            <div class="config-field"><label>TGL MULAI</label><input type="date" id="date-pagi"></div>
+            <div class="config-field"><label>PIKET/HARI</label>
+              <select id="perday-pagi"><option value="2" selected>2 ORANG</option><option value="3">3 ORANG</option></select>
+            </div>
+          </div>
+          <div class="sidebar-actions">
+            <button class="btn btn-add" onclick="addStaff('pagi')">+ TAMBAH</button>
+            <button class="btn btn-generate" data-shift="pagi" onclick="generateSchedule('pagi')">⚡ GENERATE</button>
+          </div>
+        </div>
+        <div class="schedule-card" id="output-pagi">
+          <div class="empty-state"><div class="empty-icon">📡</div><div>INPUT STAFF → KLIK ⚡ GENERATE</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SORE -->
+    <div class="panel" id="panel-sore">
+      <div class="two-col">
+        <div class="sidebar">
+          <div class="sidebar-header">
+            <div class="shift-dot" style="background:var(--sore-neon);box-shadow:0 0 8px var(--sore-neon)"></div>
+            <h3 style="color:var(--sore-neon)">SHIFT SORE</h3>
+            <span id="count-sore">0 STAFF</span>
+          </div>
+          <div class="staff-list" id="list-sore"></div>
+          <div class="config-row">
+            <div class="config-field"><label>TGL MULAI</label><input type="date" id="date-sore"></div>
+            <div class="config-field"><label>PIKET/HARI</label>
+              <select id="perday-sore"><option value="2" selected>2 ORANG</option><option value="3">3 ORANG</option></select>
+            </div>
+          </div>
+          <div class="sidebar-actions">
+            <button class="btn btn-add" onclick="addStaff('sore')">+ TAMBAH</button>
+            <button class="btn btn-generate" data-shift="sore" onclick="generateSchedule('sore')">⚡ GENERATE</button>
+          </div>
+        </div>
+        <div class="schedule-card" id="output-sore">
+          <div class="empty-state"><div class="empty-icon">📡</div><div>INPUT STAFF → KLIK ⚡ GENERATE</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MALAM -->
+    <div class="panel" id="panel-malam">
+      <div class="two-col">
+        <div class="sidebar">
+          <div class="sidebar-header">
+            <div class="shift-dot" style="background:var(--malam-neon);box-shadow:0 0 8px var(--malam-neon)"></div>
+            <h3 style="color:var(--malam-neon)">SHIFT MALAM</h3>
+            <span id="count-malam">0 STAFF</span>
+          </div>
+          <div class="staff-list" id="list-malam"></div>
+          <div class="config-row">
+            <div class="config-field"><label>TGL MULAI</label><input type="date" id="date-malam"></div>
+            <div class="config-field"><label>PIKET/HARI</label>
+              <select id="perday-malam"><option value="2" selected>2 ORANG</option><option value="3">3 ORANG</option></select>
+            </div>
+          </div>
+          <div class="sidebar-actions">
+            <button class="btn btn-add" onclick="addStaff('malam')">+ TAMBAH</button>
+            <button class="btn btn-generate" data-shift="malam" onclick="generateSchedule('malam')">⚡ GENERATE</button>
+          </div>
+        </div>
+        <div class="schedule-card" id="output-malam">
+          <div class="empty-state"><div class="empty-icon">📡</div><div>INPUT STAFF → KLIK ⚡ GENERATE</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+// CONSTANTS
+// ============================================================
+const DAYS = ['SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU','MINGGU'];
+const SHIFT_ICON = { pagi:'☀ SHIFT PAGI', sore:'◐ SHIFT SORE', malam:'☾ SHIFT MALAM' };
+const SLOT_COUNT = { pagi:11, sore:11, malam:8 };
+const STORAGE_KEY = 'jadwal_piket_v2';
+
+// ============================================================
+// STATE — schedule hasil generate disimpan terpisah
+// ============================================================
+let appState = {
+  staff: { pagi: Array(11).fill(''), sore: Array(11).fill(''), malam: Array(8).fill('') },
+  config: { pagi: { date:'', perday:2 }, sore: { date:'', perday:2 }, malam: { date:'', perday:2 } },
+  schedule: { pagi: null, sore: null, malam: null }  // null = belum di-generate
+};
+
+// ============================================================
+// LOCALSTORAGE
+// ============================================================
+function saveAll() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appState)); } catch(e) {}
+}
+
+function loadAll() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const saved = JSON.parse(raw);
+      // Merge saved ke appState, pastikan array length benar
+      ['pagi','sore','malam'].forEach(s => {
+        if (saved.staff && saved.staff[s]) {
+          const len = SLOT_COUNT[s];
+          const arr = saved.staff[s];
+          appState.staff[s] = arr.length >= len ? arr : [...arr, ...Array(len - arr.length).fill('')];
+        }
+        if (saved.config && saved.config[s]) appState.config[s] = saved.config[s];
+        if (saved.schedule && saved.schedule[s] !== undefined) appState.schedule[s] = saved.schedule[s];
+      });
+    }
+  } catch(e) {}
+}
+
+let saveTimer = null;
+function debounceSave() { clearTimeout(saveTimer); saveTimer = setTimeout(saveAll, 500); }
+
+// ============================================================
+// URL ENCODE/DECODE — untuk share link
+// ============================================================
+function encodeStateToUrl() {
+  try {
+    const data = {
+      st: {
+        p: appState.staff.pagi,
+        s: appState.staff.sore,
+        m: appState.staff.malam
+      },
+      cf: {
+        p: appState.config.pagi,
+        s: appState.config.sore,
+        m: appState.config.malam
+      },
+      sc: {
+        p: appState.schedule.pagi,
+        s: appState.schedule.sore,
+        m: appState.schedule.malam
+      }
+    };
+    const json = JSON.stringify(data);
+    const encoded = btoa(unescape(encodeURIComponent(json)));
+    return window.location.href.split('?')[0] + '?d=' + encoded;
+  } catch(e) { return window.location.href; }
+}
+
+function decodeStateFromUrl() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const d = params.get('d');
+    if (!d) return false;
+    const json = decodeURIComponent(escape(atob(d)));
+    const data = JSON.parse(json);
+    if (data.st) {
+      if (data.st.p) appState.staff.pagi = data.st.p;
+      if (data.st.s) appState.staff.sore = data.st.s;
+      if (data.st.m) appState.staff.malam = data.st.m;
+    }
+    if (data.cf) {
+      if (data.cf.p) appState.config.pagi = data.cf.p;
+      if (data.cf.s) appState.config.sore = data.cf.s;
+      if (data.cf.m) appState.config.malam = data.cf.m;
+    }
+    if (data.sc) {
+      if (data.sc.p !== undefined) appState.schedule.pagi = data.sc.p;
+      if (data.sc.s !== undefined) appState.schedule.sore = data.sc.s;
+      if (data.sc.m !== undefined) appState.schedule.malam = data.sc.m;
+    }
+    return true;
+  } catch(e) { return false; }
+}
+
+// ============================================================
+// RENDER STAFF LIST
+// ============================================================
+function renderStaffList(shift) {
+  const list = document.getElementById('list-'+shift);
+  list.innerHTML = '';
+  appState.staff[shift].forEach((name, i) => {
+    const div = document.createElement('div');
+    div.className = 'staff-item';
+    div.innerHTML = `
+      <span class="staff-num">${String(i+1).padStart(2,'0')}</span>
+      <input class="staff-name-input"
+        value="${(name||'').replace(/"/g,'&quot;')}"
+        placeholder="ketik nama staff..."
+        oninput="appState.staff['${shift}'][${i}]=this.value;updateCount('${shift}');debounceSave()"/>
+      <button class="btn-remove" onclick="clearSlot('${shift}',${i})" title="Hapus nama">×</button>`;
+    list.appendChild(div);
+  });
+  updateCount(shift);
+}
+
+function clearSlot(shift, idx) {
+  appState.staff[shift][idx] = '';
+  renderStaffList(shift);
+  saveAll();
+}
+
+function updateCount(shift) {
+  const n = appState.staff[shift].filter(s => s.trim() !== '').length;
+  document.getElementById('count-'+shift).textContent = n + ' STAFF';
+}
+
+function addStaff(shift) {
+  appState.staff[shift].push('');
+  renderStaffList(shift);
+  const inputs = document.getElementById('list-'+shift).querySelectorAll('input');
+  if (inputs.length) inputs[inputs.length-1].focus();
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(shift) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-shift="${shift}"]`).classList.add('active');
+  document.getElementById('panel-'+shift).classList.add('active');
+}
+
+// ============================================================
+// GENERATE + RENDER OUTPUT
+// ============================================================
+function generateSchedule(shift) {
+  const staffRaw = appState.staff[shift].filter(s => s.trim() !== '');
+  if (staffRaw.length < 2) { alert('MINIMAL 2 NAMA STAFF HARUS DIISI!'); return; }
+
+  const perDay = parseInt(document.getElementById('perday-'+shift).value);
+  const dateVal = document.getElementById('date-'+shift).value;
+  appState.config[shift] = { date: dateVal, perday: perDay };
+
+  const n = staffRaw.length;
+  const counts = new Array(n).fill(0);
+  const days = [];
+  let idx = 0;
+  for (let d = 0; d < 14; d++) {
+    const picked = []; let attempts = 0;
+    while (picked.length < Math.min(perDay, n) && attempts < n*3) {
+      const c = idx % n; idx++; attempts++;
+      if (!picked.includes(c)) { picked.push(c); counts[c]++; }
+    }
+    days.push(picked);
+  }
+
+  appState.schedule[shift] = { staffRaw, perDay, dateVal, days, counts };
+  saveAll();
+  renderOutput(shift);
+  showToast('⚡ JADWAL TERSIMPAN', 'green');
+}
+
+function renderOutput(shift) {
+  const out = document.getElementById('output-'+shift);
+  const sc = appState.schedule[shift];
+  if (!sc) {
+    out.innerHTML = `<div class="empty-state"><div class="empty-icon">📡</div><div>INPUT STAFF → KLIK ⚡ GENERATE</div></div>`;
+    return;
+  }
+  const { staffRaw, perDay, dateVal, days, counts } = sc;
+  const startDate = dateVal ? new Date(dateVal) : new Date();
+  const nc = { pagi:'var(--pagi-neon)', sore:'var(--sore-neon)', malam:'var(--malam-neon)' }[shift];
+
+  let html = `<div class="schedule-top">
+    <div>
+      <h2 style="color:${nc};text-shadow:0 0 14px ${nc}">${SHIFT_ICON[shift]}</h2>
+      <div class="schedule-meta">${staffRaw.length} STAFF · ${perDay} PIKET/HARI · 14 HARI</div>
+    </div>
+    <button class="btn-print" onclick="window.print()">🖨 PRINT</button>
+  </div>`;
+
+  for (let w = 0; w < 2; w++) {
+    html += `<div class="week-block"><div class="week-label" style="color:${nc}">MINGGU ${w+1}</div><div class="days-grid">`;
+    for (let d = 0; d < 7; d++) {
+      const di = w*7+d;
+      const date = new Date(startDate); date.setDate(startDate.getDate()+di);
+      const ds = `${String(date.getDate()).padStart(2,'0')}/${String(date.getMonth()+1).padStart(2,'0')}`;
+      html += `<div class="day-card" data-shift="${shift}">
+        <div class="day-name">${DAYS[d]}</div>
+        <div class="day-date">${ds}</div>
+        ${days[di].map(p => `<div class="piket-name">${staffRaw[p]}</div>`).join('')}
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+  html += `<div class="rekap-section"><div class="rekap-title">// REKAP JUMLAH PIKET</div><div class="rekap-grid">`;
+  staffRaw.forEach((name, i) => {
+    html += `<span class="rekap-badge" data-shift="${shift}">${name} · <strong>${counts[i]}x</strong></span>`;
+  });
+  html += `</div></div>`;
+  out.innerHTML = html;
+}
+
+// ============================================================
+// CONFIG FIELDS — sync dari state ke input
+// ============================================================
+function syncConfigFields() {
+  ['pagi','sore','malam'].forEach(s => {
+    const cfg = appState.config[s];
+    const dateEl = document.getElementById('date-'+s);
+    const perdayEl = document.getElementById('perday-'+s);
+    if (cfg.date) dateEl.value = cfg.date;
+    else dateEl.value = new Date().toISOString().split('T')[0];
+    perdayEl.value = cfg.perday || 2;
+
+    // listen changes
+    dateEl.addEventListener('change', () => { appState.config[s].date = dateEl.value; debounceSave(); });
+    perdayEl.addEventListener('change', () => { appState.config[s].perday = parseInt(perdayEl.value); debounceSave(); });
+  });
+}
+
+// ============================================================
+// RESET
+// ============================================================
+function openModal(id) { document.getElementById('modal-'+id).classList.add('open'); }
+function closeModal(id) { document.getElementById('modal-'+id).classList.remove('open'); }
+
+function doReset() {
+  const shifts = [];
+  if (document.getElementById('reset-pagi').checked) shifts.push('pagi');
+  if (document.getElementById('reset-sore').checked) shifts.push('sore');
+  if (document.getElementById('reset-malam').checked) shifts.push('malam');
+  if (!shifts.length) { alert('Pilih minimal 1 shift!'); return; }
+
+  shifts.forEach(s => {
+    appState.schedule[s] = null;
+    // Reset tanggal ke hari ini
+    appState.config[s].date = new Date().toISOString().split('T')[0];
+    renderOutput(s);
+  });
+
+  syncConfigFields();
+  saveAll();
+  closeModal('reset');
+  showToast('🔄 PERIODE DIRESET', 'pink');
+}
+
+// ============================================================
+// SHARE
+// ============================================================
+function openShare() {
+  const url = encodeStateToUrl();
+  document.getElementById('share-url-text').textContent = url;
+  openModal('share');
+}
+
+function copyShareUrl() {
+  const url = document.getElementById('share-url-text').textContent;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('📋 LINK TERSALIN!', 'blue');
+    closeModal('share');
+  }).catch(() => {
+    // fallback
+    const el = document.getElementById('share-url-text');
+    const range = document.createRange();
+    range.selectNode(el);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    showToast('📋 LINK TERSALIN!', 'blue');
+    closeModal('share');
+  });
+}
+
+// ============================================================
+// TOAST
+// ============================================================
+let toastTimer = null;
+function showToast(msg, type='blue') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast ${type} show`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+function init() {
+  // Cek URL dulu (share link), kalau tidak ada baru load localStorage
+  const fromUrl = decodeStateFromUrl();
+  if (!fromUrl) loadAll();
+
+  syncConfigFields();
+  ['pagi','sore','malam'].forEach(s => {
+    renderStaffList(s);
+    renderOutput(s); // render jadwal yang sudah tersimpan
+  });
+
+  // Close modal saat klik background
+  document.querySelectorAll('.modal-bg').forEach(bg => {
+    bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open'); });
+  });
+
+  if (fromUrl) showToast('📡 JADWAL BERHASIL DIMUAT', 'blue');
+}
+
+init();
+</script>
+</body>
+</html>
